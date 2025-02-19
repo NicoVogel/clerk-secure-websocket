@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "serve:server": "tsx src/server/main.ts",
-    "serve:client": "cd src/client && vite",
+    "serve:server": "dotenv tsx src/server/main.ts",
+    "serve:client": "dotenv vite src/client",
     "tsc": "tsc"
   },
   "author": "Nico Vogel",
@@ -17,6 +17,7 @@
   },
   "devDependencies": {
     "@types/ws": "^8.5.14",
+    "dotenv-cli": "^8.0.0",
     "tsx": "^4.19.3",
     "typescript": "^5.7.3",
     "vite": "^6.1.1"
