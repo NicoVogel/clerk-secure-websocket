@@ -1,4 +1,5 @@
 import http from "node:http";
+import { WebSocketServer } from "ws";
 
 const server = http.createServer((req, res) => {
   // Add CORS headers
@@ -18,6 +19,25 @@ const server = http.createServer((req, res) => {
 
   res.writeHead(200, { "Content-Type": "text/plain" });
   res.end("hello world");
+});
+
+const wss = new WebSocketServer({
+  noServer: true,
+});
+
+wss.on("connection", (ws, req) => {
+  console.log("connection");
+  let index = 0;
+  ws.on("message", (message) => {
+    console.log("message", message);
+    ws.send(`pong ${index++}`);
+  });
+});
+
+server.on("upgrade", (req, socket, header) => {
+  wss.handleUpgrade(req, socket, header, (ws) => {
+    wss.emit("connection", ws, req);
+  })
 });
 
 const port = 3000;
